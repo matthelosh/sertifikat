@@ -1,0 +1,89 @@
+<script setup>
+import { h, ref, computed } from 'vue';
+import { router, Head } from '@inertiajs/vue3';
+import GuestLayout from '@/Layouts/Guestlayout.vue';
+import { ElNotification } from 'element-plus';
+import 'element-plus/es/components/base/style/css';
+import 'element-plus/theme-chalk/el-notification.css';
+
+const peserta = ref({
+    no_id: '',
+    nama: '',
+    jk: '',
+    instansi: '',
+    alamat: '',
+    kegiatan_id: '',
+    sebagai: '',
+    foto: ''
+});
+
+const onSubmit = async() => {
+    let fd = new FormData();
+    // fd.append("peserta", JSON.stringify(peserta.value))
+    // if(foto.value !== null) fd.append("file_foto", foto.value)
+    await router.post(route('peserta.daftar'), peserta.value, {
+        onSuccess: (page) => {
+            ElNotification({
+                title: 'Informasi',
+                message: h('i', {style: 'color: teal'}, 'Data peserta disimpan'),
+                position: 'top-right'
+            })
+        },
+        onError: (err) => {
+            console.log(err)
+        }
+    })
+
+}
+
+const fileFoto = ref(null)
+const foto = ref(null)
+
+const onFotoPicked = (e) => {
+    let file = e.target.files[0]
+    peserta.value.foto = URL.createObjectURL(file)
+    foto.value = file
+}
+
+const defaultFoto = (e) => {
+    e.target.src = '/img/avatar.png'
+}
+</script>
+
+<template>
+<Head title="Daftar Peserta" />
+<GuestLayout>
+    <div class="w-full">
+        <h1 class="mb-2 border-b border-dashed pb-3 text-slate-600 font-bold tracking-wide">Formulir Pendaftaran</h1>
+        <img :src="peserta.foto" alt="Avatar" class="w-24 mx-auto mb-2 rounded-full hover:cursor-pointer hover:shadow-lg" @error="defaultFoto" @click="fileFoto.click()" />
+        <input type="file" ref="fileFoto" class="hidden" @change="onFotoPicked">
+        <el-form :model="peserta" label-width="120px" label-position="left">
+            <el-form-item label="No. Identitas">
+                <el-input v-model="peserta.no_id" placeholder="Isikan NIK / NIP / NISN" />
+            </el-form-item>
+            <el-form-item label="Nama Lengkap">
+                <el-input v-model="peserta.nama" placeholder="Isikan Nama Lengkap" />
+            </el-form-item>
+            <el-form-item label="Jenis Kelamin">
+                <el-select v-model="peserta.jk">
+                    <el-option label="Laki-laki" value="Laki-laki" />    
+                    <el-option label="Perempuan" value="Perempuan" />    
+                </el-select>
+            </el-form-item>
+            <el-form-item label="Asal Instansi">
+                <el-input v-model="peserta.instansi" placeholder="Isikan Asalah Instansi" />
+            </el-form-item>
+            
+            <el-form-item label="Asal Instansi (Opsional)">
+                <el-input v-model="peserta.alamat" type="textarea" placeholder="Isikan Alamat" />
+            </el-form-item>
+            <el-form-item label="Status Kepesertaan">
+                <el-input v-model="peserta.sebagai" type="textarea" placeholder="Contoh: Peserta Tari Saman / Pemenang" />
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" @click="onSubmit">Daftar</el-button>
+            </el-form-item>
+        </el-form>
+    </div>
+</GuestLayout>
+</template>
