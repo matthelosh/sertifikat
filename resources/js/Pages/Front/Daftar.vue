@@ -6,6 +6,8 @@ import { ElNotification } from 'element-plus';
 import 'element-plus/es/components/base/style/css';
 import 'element-plus/theme-chalk/el-notification.css';
 
+// defineProps({ error: Object})
+
 const peserta = ref({
     no_id: '',
     nama: '',
@@ -19,9 +21,9 @@ const peserta = ref({
 
 const onSubmit = async() => {
     let fd = new FormData();
-    // fd.append("peserta", JSON.stringify(peserta.value))
-    // if(foto.value !== null) fd.append("file_foto", foto.value)
-    await router.post(route('peserta.daftar'), peserta.value, {
+    fd.append("peserta", JSON.stringify(peserta.value))
+    if(foto.value !== null) fd.append("file_foto", foto.value)
+    await router.post(route('peserta.daftar'), fd, {
         onSuccess: (page) => {
             ElNotification({
                 title: 'Informasi',
@@ -30,7 +32,13 @@ const onSubmit = async() => {
             })
         },
         onError: (err) => {
-            console.log(err)
+            Object.keys(err).forEach(k => {
+                ElNotification({
+                    title: 'Error',
+                    message: h('i', {style: 'color: red'}, err[k]),
+                    position: 'top-right'
+                })
+            })
         }
     })
 
@@ -56,7 +64,7 @@ const defaultFoto = (e) => {
     <div class="w-full">
         <h1 class="mb-2 border-b border-dashed pb-3 text-slate-600 font-bold tracking-wide">Formulir Pendaftaran</h1>
         <img :src="peserta.foto" alt="Avatar" class="w-24 mx-auto mb-2 rounded-full hover:cursor-pointer hover:shadow-lg" @error="defaultFoto" @click="fileFoto.click()" />
-        <input type="file" ref="fileFoto" class="hidden" @change="onFotoPicked">
+        <input type="file" ref="fileFoto" class="hidden" @change="onFotoPicked" accept=".jpg, .png">
         <el-form :model="peserta" label-width="120px" label-position="left">
             <el-form-item label="No. Identitas">
                 <el-input v-model="peserta.no_id" placeholder="Isikan NIK / NIP / NISN" />

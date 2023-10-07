@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PesertaRequest;
 use App\Models\Kegiatan;
 use App\Models\Peserta;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class PesertaController extends Controller
@@ -14,9 +16,13 @@ class PesertaController extends Controller
             'pesertas' => Peserta::all(),
         ]);
     }
-    public function store(Request $request) {
+    public function store(PesertaRequest $request) {
         // dd(json_decode($request->peserta));
-        
+        if($request->file('file_foto')) {
+            $file = $request->file('file_foto');
+            $store = Storage::putFileAs('public/images/peserta', $request->file('file_foto'), $request->no_id.'.'.$file->extension());
+            $url = Storage::url($store);
+        }
         try {
             $kegiatan = Kegiatan::find(1);
             Peserta::create([
@@ -27,7 +33,7 @@ class PesertaController extends Controller
                 'alamat' => $request['alamat'] ?? null,
                 'kegiatan_id' => $kegiatan->kode,
                 'sebagai' => $request['sebagai'],
-                'foto' => $request['foto'] ?? null
+                'foto' => $request->file('file_foto') ? $url : ($request['foto'] ?? null)
             ]);
 
             return back()->with('status', 'Ok');

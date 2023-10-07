@@ -25,3 +25,11 @@ const props = defineProps({ pesertas: Array})
         </el-table>
     </AuthenticatedLayout>
 </template>
+
+<style>
+.el-table__cell {
+    border: 1px solid gray!important;
+    /* background: pink; */
+    padding: 2px 5px;
+}
+</style>
