@@ -51,8 +51,8 @@ const extensions = [
 
 // editor's content
 const content = ref(`
-  <h1>Heading</h1>
-  <p>This Editor is awesome!</p>
+  <h1><b>Selamat Datang!</b></h1>
+  <p>Membuat sertifikat tidak pernah semudah ini.</p>
 `);
 
 </script>
@@ -80,7 +80,7 @@ const content = ref(`
 
                 <Link
                     v-if="canRegister"
-                    :href="route('register')"
+                    :href="route('front.daftar')"
                     class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
                     >Register</Link
                 >

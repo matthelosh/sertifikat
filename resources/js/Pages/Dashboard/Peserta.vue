@@ -1,25 +1,36 @@
 <script setup>
 import { ref, defineAsyncComponent } from 'vue';
-import 'element-plus/es/components/table/src/table/defaults';
+import { Icon } from '@iconify/vue';
+// import 'element-plus/es/components/table/src/table/defaults';
+import 'element-plus/es/components/table/style/css'
 
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 
 const props = defineProps({ pesertas: Array})
+
+const defaultImage = (e) => {
+    e.target.src = '/img/avatar.png'
+}
 </script>
 
 <template>
-    <AuthenticatedLayout>
-        <h1>Peserta</h1>
-        <el-table :data="pesertas" border class="text-sm" striped>
-            <el-table-column prop="no_id" label="No. ID" />
-            <el-table-column prop="nama" label="Nama" />
-            <el-table-column prop="jk" label="Jenis Kelamin" />
-            <el-table-column prop="instansi" label="Asal Lembaga" />
-            <el-table-column prop="alamat" label="Alamat" />
-            <el-table-column prop="sebagai" label="Status Peserta" />
-            <el-table-column label="Foto">
+    <AuthenticatedLayout pageTitle="Data Peserta">
+        <template #page-title>
+            <Icon icon="mdi:folder-open" class="text-slate-500 text-xl" />
+            Data Peserta Kegiatan
+        </template>
+        <el-table :data="pesertas" height="100%"  stripe border >
+            <el-table-column header-align="center" prop="no_id" label="No. ID"  />
+            <el-table-column header-align="center" prop="nama" label="Nama" />
+            <el-table-column header-align="center" prop="jk" label="Jenis Kelamin" />
+            <el-table-column header-align="center" prop="instansi" label="Asal Lembaga" />
+            <el-table-column header-align="center" prop="alamat" label="Alamat" />
+            <el-table-column header-align="center" prop="sebagai" label="Status Peserta" />
+            <el-table-column header-align="center" label="Foto">
                 <template #default="scope">
-                    <img :src="scope.row.foto" alt="Foto">
+                    <div class=" flex justify-center">
+                        <img :src="scope.row.foto" alt="Foto" class="h-16 shadow" @error="defaultImage">
+                    </div>
                 </template>
             </el-table-column>
         </el-table>
@@ -27,9 +38,11 @@ const props = defineProps({ pesertas: Array})
 </template>
 
 <style>
+/* th.el-table__cell {
+    color: #454545!important;
+}
 .el-table__cell {
     border: 1px solid gray!important;
-    /* background: pink; */
-    padding: 2px 5px;
-}
+    padding: 2px 5px; 
+}*/
 </style>

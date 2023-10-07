@@ -31,7 +31,12 @@ Route::get('/', function () {
 Route::post('/peserta/daftar', [PesertaController::class, 'store'])->name('peserta.daftar');
 
 Route::get('/daftar-peserta', function() {
-    return Inertia::render('Front/Daftar');
+    return Inertia::render('Front/Daftar', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
 })->name('front.daftar');
 
 Route::prefix('dashboard')->group(function() {

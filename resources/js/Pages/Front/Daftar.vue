@@ -1,10 +1,28 @@
 <script setup>
 import { h, ref, computed } from 'vue';
-import { router, Head } from '@inertiajs/vue3';
+import { router, Head, Link } from '@inertiajs/vue3';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import { ElNotification } from 'element-plus';
 import 'element-plus/es/components/base/style/css';
 import 'element-plus/theme-chalk/el-notification.css';
+
+
+defineProps({
+    canLogin: {
+        type: Boolean,
+    },
+    canRegister: {
+        type: Boolean,
+    },
+    laravelVersion: {
+        type: String,
+        required: true,
+    },
+    phpVersion: {
+        type: String,
+        required: true,
+    },
+});
 
 // defineProps({ error: Object})
 
@@ -61,6 +79,29 @@ const defaultFoto = (e) => {
 <template>
 <Head title="Daftar Peserta" />
 <GuestLayout>
+    <div v-if="canLogin" class="sm:fixed sm:top-0 sm:right-0 p-6 text-right">
+        <Link
+            v-if="$page.props.auth.user"
+            :href="route('dashboard')"
+            class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+            >Dashboard</Link
+        >
+
+        <template v-else>
+            <Link
+                :href="route('login')"
+                class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                >Log in</Link
+            >
+
+            <Link
+                v-if="canRegister"
+                :href="route('front.daftar')"
+                class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                >Register</Link
+            >
+        </template>
+    </div>
     <div class="w-full">
         <h1 class="mb-2 border-b border-dashed pb-3 text-slate-600 font-bold tracking-wide">Formulir Pendaftaran</h1>
         <img :src="peserta.foto" alt="Avatar" class="w-24 mx-auto mb-2 rounded-full hover:cursor-pointer hover:shadow-lg" @error="defaultFoto" @click="fileFoto.click()" />
