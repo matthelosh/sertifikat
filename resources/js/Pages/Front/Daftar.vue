@@ -1,7 +1,7 @@
 <script setup>
 import { h, ref, computed } from 'vue';
 import { router, Head } from '@inertiajs/vue3';
-import GuestLayout from '@/Layouts/Guestlayout.vue';
+import GuestLayout from '@/Layouts/GuestLayout.vue';
 import { ElNotification } from 'element-plus';
 import 'element-plus/es/components/base/style/css';
 import 'element-plus/theme-chalk/el-notification.css';
