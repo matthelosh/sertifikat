@@ -28,6 +28,9 @@ import SideItem from '@/Layouts/Dashboard/SideItem.vue'
                         <Icon icon="mdi:folder-open" class="text-slate-500 text-lg" />
                         Header
                     </div>
+                    <div class="toolbar-items flex items-center gap-1">
+                        <Link href="/logout" method="POST" class="text-sm px-2 py-1 rounded-md shadow-lg text-white bg-red-400">Logout</Link>
+                    </div>
                 </el-header>
                 <el-main class="h-[82vh] overflow-y-auto">
                     <slot />
