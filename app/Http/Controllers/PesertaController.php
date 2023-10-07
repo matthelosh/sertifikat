@@ -5,9 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Kegiatan;
 use App\Models\Peserta;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class PesertaController extends Controller
 {
+    public function home(Request $request) {
+        return Inertia::render('Dashboard/Peserta', [
+            'pesertas' => Peserta::all(),
+        ]);
+    }
     public function store(Request $request) {
         // dd(json_decode($request->peserta));
         
