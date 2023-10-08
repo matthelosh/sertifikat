@@ -10,7 +10,7 @@ class KegiatanController extends Controller
 {
     function home() {
         return Inertia::render('Dashboard/Kegiatan', [
-            'kegiatans' => Kegiatan::all()
+            'kegiatans' => Kegiatan::with('pesertas')->get()
         ]);
     }
 }

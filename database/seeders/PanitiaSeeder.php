@@ -14,7 +14,7 @@ class PanitiaSeeder extends Seeder
     public function run(): void
     {
         Panitia::create([
-            'nama' => 'Administrator',
+            'nama' => 'Ikhwan',
             'jabatan' => 'admin',
             'status' => 'aktif',
         ]);

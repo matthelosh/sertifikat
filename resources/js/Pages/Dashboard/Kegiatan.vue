@@ -31,6 +31,11 @@ const search = ref('')
             <el-table-column header-align="center" prop="lokasi" label="Lokasi" />
             <el-table-column header-align="center" prop="ttd_1" label="Penanggungjawab" />
             <el-table-column header-align="center" align="center" prop="keterangan" label="Keterangan" />
+            <el-table-column header-align="center" align="center"  label="Peserta">
+                <template #default="scope">
+                    {{ scope.row.pesertas.length }}
+                </template>
+            </el-table-column>
             <el-table-column header-align="center" align="center" label="Opsi">
                 <template #default="scope">
                     <button class="bg-red-500 py-1 px-3 rounded-lg text-white shadow-md my-4">

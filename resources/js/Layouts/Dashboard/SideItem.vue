@@ -25,6 +25,11 @@ const menus = [
         route: 'dashboard.panitia',
         icon: 'account-tie'
     },
+    {
+        label: 'Sertifikat',
+        route: 'dashboard.sertifikat',
+        icon: 'certificate'
+    },
 ]
 </script>
 <template>

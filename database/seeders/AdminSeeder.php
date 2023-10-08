@@ -15,11 +15,11 @@ class AdminSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'name' => 'admin',
-            'email' => 'cert@matsoleh.my.id',
+            'name' => 'Ikhwan',
+            'email' => 'ikhwan@matsoleh.my.id',
             'password' => Hash::make('123'),
             'userable_type' => 'App\\Models\\Panitia',
-            'userable_id' => '1'
+            'userable_id' => '2'
         ]);
     }
 }

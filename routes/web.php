@@ -54,6 +54,11 @@ Route::prefix('dashboard')->group(function() {
             return Inertia::render('Dashboard/Panitia');
         })->name('dashboard.panitia');
     });
+    Route::prefix('sertifikat')->group(function () {
+        Route::get('/', function() {
+            return Inertia::render('Dashboard/Sertifikat');
+        })->name('dashboard.sertifikat');
+    });
 })->middleware(['auth', 'verified']);
 
 

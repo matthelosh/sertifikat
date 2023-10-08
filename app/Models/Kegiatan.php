@@ -21,4 +21,8 @@ class Kegiatan extends Model
         'ttd_3',
         'keterangan'
     ];
+
+    function pesertas() {
+        return $this->hasMany(Peserta::class, 'kegiatan_id', 'kode');
+    }
 }
