@@ -24,7 +24,7 @@ const toggleSide = () => {
     <div class="common-layout">
         <el-container class="grid grid-cols-12 bg-slate-50 gap-2 p-3 h-screen">
             <el-aside class="aside col-span-2 h-[97vh] sm:h-full z-20 sm:z-0 bg-slate-200 overflow-y-auto shadow-xl rounded-xl hover:shadow-none hidden sm:block absolute w-[200px] sm:w-full sm:relative transition">
-                <div class="avatar w-full h-[150px]">
+                <div class="avatar w-full h-[150px] md:my-8">
                     <img src="/img/logo.png" alt="Logo" class="w-[50%] mx-auto rounded-full my-4">
                 </div>
                 <SideItem class="my-2"/>
@@ -33,23 +33,28 @@ const toggleSide = () => {
                 </div>
             </el-aside>
             <el-container class="col-span-12 sm:col-span-10  h-[89vh] max-h-[90vh] sm:px-4 relative">
-                <el-header class="w-full py-2 h-20 px-3 flex items-center justify-between bg-white rounded-xl shadow-lg">
+                <el-header class="w-full py-2 h-20 sm:h-14 p-3 flex flex-wrap sm:flex-nowrap items-center justify-start bg-white rounded-xl shadow-lg gap-2">
                     <div class="logo flex items-center gap-1">
                         
                         <slot name="page-title" />
                     </div>
-                    <div class="toolbar-items sm:flex items-center gap-1 ">
+                    <div class="toolbar-items sm:flex items-center justify-between gap-1 w-auto ">
+                        <slot name="items-toolbar" />
+                        
+                    </div>
+                    <div class="end-button absolute right-6">
                         <Link href="/logout" as="button" method="POST" class="text-sm px-2 py-1 rounded-md shadow-lg text-white bg-red-400 hidden sm:flex">Logout</Link>
                         <button @click="toggleSide" class="sm:hidden">
                             <Icon icon="mdi:menu" class="text-xl text-sky-800" />
                         </button>
                     </div>
+
                 </el-header>
-                <el-main class="h-[97%] max-h-[97%] overflow-y-auto my-6 bg-white rounded-xl p-3 shadow-xl ">
+                <el-main class="h-[97%] max-h-[97%] overflow-y-auto my-4 bg-white rounded-xl p-3 shadow-xl ">
                     <slot />
                 </el-main>
-                <el-footer class=" flex justify-center fixed left-[50%] bottom-0" >
-                    <p class="text-sm py-2 px-4 bg-slate-200 rounded-t-lg shadow-lg text-sltae-500">Copyright &copy; {{ new Date().getFullYear() }} <a href="https://matsoleh.my.id" class="text-purple-600 hover:underline">Matsoleh</a></p>
+                <el-footer class=" flex justify-center fixed w-full left-0 bottom-0" >
+                    <p class="text-sm py-2 px-4 bg-slate-200 rounded-t-lg shadow-lg text-slate-500 ">Copyright &copy; {{ new Date().getFullYear() }} <a href="https://matsoleh.my.id" class="text-purple-600 hover:underline">Matsoleh</a></p>
                 </el-footer>
             </el-container>
         </el-container>

@@ -1,42 +1,43 @@
 <script setup>
 import { ref, defineAsyncComponent } from 'vue';
+import { Icon } from '@iconify/vue';
+import 'element-plus/es/components/table/style/css'
 
 const AuthenticatedLayout  = defineAsyncComponent(() => import('@/Layouts/AuthenticatedLayout.vue'));
+defineProps({ kegiatans: Array });
 
-const datas = ref([
-    {
-        kode: 'hsnsp2023',
-        nama: 'Gelar Hari Santri Nasional dan Sumpah Pemuda 2023',
-        mulai: '2023-10-28',
-        selesai: '2023-10-28',
-        penyelenggara: 'Korwil Kecamatan Wagir',
-        lokasi: 'Kecamatan Wagir',
-        ttd_1: 'Korwil Dinas Pendidikan Kecamatan Wagir',
-        keterangan: 'Sukses'
-    },
-    {
-        kode: 'hsnsp2023',
-        nama: 'Gelar Hari Santri Nasional dan Sumpah Pemuda 2023',
-        mulai: '2023-10-28',
-        selesai: '2023-10-28',
-        penyelenggara: 'Korwil Kecamatan Wagir',
-        lokasi: 'Kecamatan Wagir',
-        ttd_1: 'Korwil Dinas Pendidikan Kecamatan Wagir',
-        keterangan: 'Sukses'
-    },
-])
+const search = ref('')
+
 </script>
 
 <template>
     <AuthenticatedLayout>
-        <el-table :data="datas" class="w-full bg-white text-sm" stripe border>
-            <el-table-column border prop="kode" label="Kode" />
-            <el-table-column border prop="nama" label="Nama Kegiatan" />
-            <el-table-column border prop="mulai" label="Tanggal" />
-            <el-table-column border prop="penyelenggara" label="Penyelenggara" />
-            <el-table-column border prop="lokasi" label="Lokasi" />
-            <el-table-column border prop="ttd_1" label="Penanggungjawab" />
-            <el-table-column border prop="keterangan" label="Keterangan" />
+        <template #page-title>
+            <Icon icon="mdi:human-male-board-poll" class="text-slate-500 text-xl" />
+            Data Kegiatan
+        </template>
+        <template #items-toolbar>
+            <el-input type="text" placeholder="Cari" v-model="search" clearable>
+                <template #prefix>
+                    <Icon icon="mdi:magnify" />
+                </template>
+            </el-input>
+        </template>
+        <el-table :data="kegiatans" class="w-full bg-white text-xs" stripe >
+            <el-table-column header-align="center" align="center" prop="kode" label="Kode" />
+            <el-table-column header-align="center" prop="nama" label="Nama Kegiatan" />
+            <el-table-column header-align="center" prop="mulai" label="Tanggal" />
+            <el-table-column header-align="center" prop="penyelenggara" label="Penyelenggara" />
+            <el-table-column header-align="center" prop="lokasi" label="Lokasi" />
+            <el-table-column header-align="center" prop="ttd_1" label="Penanggungjawab" />
+            <el-table-column header-align="center" align="center" prop="keterangan" label="Keterangan" />
+            <el-table-column header-align="center" align="center" label="Opsi">
+                <template #default="scope">
+                    <button class="bg-red-500 py-1 px-3 rounded-lg text-white shadow-md my-4">
+                        Hapus
+                    </button>
+                </template>    
+            </el-table-column>
         </el-table>
     </AuthenticatedLayout>
 </template>

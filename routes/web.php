@@ -44,9 +44,7 @@ Route::prefix('dashboard')->group(function() {
         return Inertia::render('Dashboard');
     })->name('dashboard');
     Route::prefix('kegiatan')->group(function () {
-        Route::get('/', function() {
-            return Inertia::render('Dashboard/Kegiatan');
-        })->name('dashboard.kegiatan');
+        Route::get('/', [KegiatanController::class, 'home'])->name('dashboard.kegiatan');
     });
     Route::prefix('peserta')->group(function () {
         Route::get('/', [PesertaController::class, 'home'])->name('dashboard.peserta');

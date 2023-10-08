@@ -16,7 +16,7 @@ const defaultImage = (e) => {
 <template>
     <AuthenticatedLayout pageTitle="Data Peserta">
         <template #page-title>
-            <Icon icon="mdi:folder-open" class="text-slate-500 text-xl" />
+            <Icon icon="mdi:human-queue" class="text-slate-500 text-xl" />
             Data Peserta Kegiatan
         </template>
         <el-table :data="pesertas" height="100%"  stripe border >
