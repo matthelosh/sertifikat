@@ -32,8 +32,8 @@ const toggleSide = () => {
                     <Link href="/logout" method="POST" as="button" class="text-sm px-2 py-1 rounded-md shadow-lg text-white bg-red-400">Logout</Link>
                 </div>
             </el-aside>
-            <el-container class="grid col-span-12 sm:col-span-10  h-[89vh] sm:px-4 relative">
-                <el-header class="w-full py-2 px-3 flex items-center justify-between bg-white rounded-xl shadow-lg">
+            <el-container class="col-span-12 sm:col-span-10  h-[89vh] max-h-[90vh] sm:px-4 relative">
+                <el-header class="w-full py-2 h-20 px-3 flex items-center justify-between bg-white rounded-xl shadow-lg">
                     <div class="logo flex items-center gap-1">
                         
                         <slot name="page-title" />
@@ -45,7 +45,7 @@ const toggleSide = () => {
                         </button>
                     </div>
                 </el-header>
-                <el-main class="h-full overflow-y-auto my-6 bg-white rounded-xl p-3 shadow-xl ">
+                <el-main class="h-[97%] max-h-[97%] overflow-y-auto my-6 bg-white rounded-xl p-3 shadow-xl ">
                     <slot />
                 </el-main>
                 <el-footer class=" flex justify-center fixed left-[50%] bottom-0" >
