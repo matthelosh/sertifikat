@@ -25,4 +25,8 @@ class Kegiatan extends Model
     function pesertas() {
         return $this->hasMany(Peserta::class, 'kegiatan_id', 'kode');
     }
+
+    function logos() {
+        return $this->hasMany(Logo::class, 'kegiatan_id', 'kode');
+    }
 }

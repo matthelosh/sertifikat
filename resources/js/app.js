@@ -9,6 +9,7 @@ import ElementPlus from 'element-plus';
 import ElementTiptapPlugin from 'element-tiptap-vue3-fixed';
 // import ElementTiptap's styles
 import 'element-tiptap-vue3-fixed/lib/style.css';
+import VueApexCharts from 'vue3-apexcharts';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -21,6 +22,7 @@ createInertiaApp({
             .use(ZiggyVue, Ziggy)
             .use(ElementPlus)
             .use(ElementTiptapPlugin)
+            .use(VueApexCharts)
             .mount(el);
     },
     progress: {

@@ -2,15 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PesertaRequest;
-use App\Models\Kegiatan;
-use App\Models\Peserta;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use App\Models\Peserta;
+use App\Models\Kegiatan;
+use Illuminate\Http\Request;
+use App\Http\Requests\PesertaRequest;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Storage;
 
 class PesertaController extends Controller
 {
+
+    public function homeFront(Request $request) {
+        return Inertia::render('Front/Peserta', [
+            'pesertas' => Peserta::with('kegiatan')->get(),
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'laravelVersion' => Application::VERSION,
+            'phpVersion' => PHP_VERSION,
+        ]);
+    }
+
     public function home(Request $request) {
         return Inertia::render('Dashboard/Peserta', [
             'pesertas' => Peserta::all(),

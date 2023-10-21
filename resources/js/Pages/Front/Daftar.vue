@@ -102,7 +102,18 @@ const defaultFoto = (e) => {
             >
         </template>
     </div>
-    <div class="w-full">
+    <div class="w-full flex justify-center p-6">
+        <div class="flex items-center gap-2 mx-auto">
+            <Link :href="route('guest')">
+                <img src="/img/logo.png" alt="Logo" class="w-12">
+            </Link>
+            <div>
+                <h1 class="text-xl font-bold text-blue-800 leading-5">Alsya</h1>
+                <small class="text-slate-500  leading-4">Sertifikat</small>
+            </div>
+        </div>
+    </div>
+    <div class="w-full bg-white p-4 rounded-lg shadow-lg">
         <h1 class="mb-2 border-b border-dashed pb-3 text-slate-600 font-bold tracking-wide">Formulir Pendaftaran</h1>
         <img :src="peserta.foto" alt="Avatar" class="w-24 mx-auto mb-2 rounded-full hover:cursor-pointer hover:shadow-lg" @error="defaultFoto" @click="fileFoto.click()" />
         <input type="file" ref="fileFoto" class="hidden" @change="onFotoPicked" accept=".jpg, .png">

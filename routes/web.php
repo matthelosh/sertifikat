@@ -28,16 +28,25 @@ Route::get('/', function () {
     ]);
 })->name('guest');
 
-Route::post('/peserta/daftar', [PesertaController::class, 'store'])->name('peserta.daftar');
+Route::prefix('peserta')->group(function() {
+    Route::get('/', [PesertaController::class, 'homeFront'])->name('front.peserta.home');
+    Route::get('/daftar', function() {
+        return Inertia::render('Front/Daftar', [
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'laravelVersion' => Application::VERSION,
+            'phpVersion' => PHP_VERSION,
+        ]);
+    })->name('front.daftar');
+    Route::post('/store', [PesertaController::class, 'store'])->name('peserta.daftar');
 
-Route::get('/daftar-peserta', function() {
-    return Inertia::render('Front/Daftar', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-})->name('front.daftar');
+});
+
+Route::prefix('sertifikat')->group(function() {
+    Route::get('/', [SertifikatController::class, 'view'])->name('front.sertifikat.view');
+});
+
+
 
 Route::prefix('dashboard')->group(function() {
     Route::get('/', function () {
@@ -55,9 +64,9 @@ Route::prefix('dashboard')->group(function() {
         })->name('dashboard.panitia');
     });
     Route::prefix('sertifikat')->group(function () {
-        Route::get('/', function() {
-            return Inertia::render('Dashboard/Sertifikat');
-        })->name('dashboard.sertifikat');
+        Route::get('/',[SertifikatController::class, 'home'])->name('dashboard.sertifikat');
+
+        
     });
 })->middleware(['auth', 'verified']);
 
