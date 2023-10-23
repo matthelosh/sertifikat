@@ -79,29 +79,9 @@ const defaultFoto = (e) => {
 <template>
 <Head title="Daftar Peserta" />
 <GuestLayout>
-    <div v-if="canLogin" class="sm:fixed sm:top-0 sm:right-0 p-6 text-right">
-        <Link
-            v-if="$page.props.auth.user"
-            :href="route('dashboard')"
-            class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-            >Dashboard</Link
-        >
-
-        <template v-else>
-            <Link
-                :href="route('login')"
-                class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                >Log in</Link
-            >
-
-            <Link
-                v-if="canRegister"
-                :href="route('front.daftar')"
-                class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                >Register</Link
-            >
-        </template>
-    </div>
+    <template #toolbar-title>
+        Formulir Pendaftaran
+    </template>
     <div class="w-full flex justify-center p-6">
         <div class="flex items-center gap-2 mx-auto">
             <Link :href="route('guest')">
@@ -113,7 +93,7 @@ const defaultFoto = (e) => {
             </div>
         </div>
     </div>
-    <div class="w-full bg-white p-4 rounded-lg shadow-lg">
+    <div class="w-full sm:w-[500px] bg-white p-4 rounded-lg shadow-lg card mx-auto">
         <h1 class="mb-2 border-b border-dashed pb-3 text-slate-600 font-bold tracking-wide">Formulir Pendaftaran</h1>
         <img :src="peserta.foto" alt="Avatar" class="w-24 mx-auto mb-2 rounded-full hover:cursor-pointer hover:shadow-lg" @error="defaultFoto" @click="fileFoto.click()" />
         <input type="file" ref="fileFoto" class="hidden" @change="onFotoPicked" accept=".jpg, .png">

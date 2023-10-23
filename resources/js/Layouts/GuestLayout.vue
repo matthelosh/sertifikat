@@ -25,7 +25,8 @@ defineProps({
                 <slot name="toolbar-title" />
             </div>
             <div class="toolbar-items flex items-center justify-between">
-                <div v-if="canLogin" class="text-right hidden md:flex md:items-center">
+                
+                <div v-if="canLogin" class="text-right hidden sm:flex sm:items-center">
                     <Link
                         v-if="$page.props.auth.user"
                         :href="route('dashboard')"
