@@ -5,6 +5,8 @@ import { Icon } from '@iconify/vue';
 import 'element-plus/es/components/table/style/css'
 import 'element-plus/es/components/pagination/style/css'
 
+import { json2csv } from 'json-2-csv';
+
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 const FormPeserta = defineAsyncComponent(() => import('@/Components/Dashboard/Peserta/FormPeserta.vue'));
 
@@ -46,18 +48,36 @@ const edit = (item) => {
 // const pageLength = computed(() => {
 //     return props.pesertas.length / perPage.value
 // })
+
+const unduhCsv = async() => {
+    let csv = await json2csv(props.pesertas, (err,csv) => {
+        return csv;
+    }, )
+                
+    const link = document.createElement("a");
+    link.href = "data:text/csv," + encodeURI(csv);
+    link.target = '_blank';
+    link.download = 'Data Pesert.csv';
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
 </script>
 
 <template>
     <AuthenticatedLayout pageTitle="Data Peserta">
         <template #page-title>
-            <div class="title flex gap-2">
-                <Icon icon="mdi:human-queue" class="text-slate-500 text-xl" />
-                Data Peserta Kegiatan
-            </div>
-            
-            <div class="page-items">
-                <el-input v-model="search" placeholder="Cari"></el-input>
+            <div class="w-full flex items-center justify-between gap-4">
+                <div class="title flex gap-2">
+                    <Icon icon="mdi:human-queue" class="text-slate-500 text-xl" />
+                    Data Peserta Kegiatan
+                </div>
+                
+                <div class="page-items flex items-center gap-2">
+                    <el-input v-model="search" placeholder="Cari"></el-input>
+                    <el-button @click="unduhCsv">Download to CSV</el-button>
+                </div>
             </div>
         </template>
         <el-table :data="displayPesertas.datas" stripe border>
