@@ -1,30 +1,21 @@
 <script setup>
-import { h, ref, computed } from 'vue';
-import { router, Head, Link } from '@inertiajs/vue3';
-import GuestLayout from '@/Layouts/GuestLayout.vue';
+import { h, ref, computed, onBeforeMount } from 'vue';
+import { Head, Link, router } from '@inertiajs/vue3';
 import { ElNotification } from 'element-plus';
 import 'element-plus/es/components/base/style/css';
 import 'element-plus/theme-chalk/el-notification.css';
+import { Icon } from '@iconify/vue';
 
-
-defineProps({
-    canLogin: {
-        type: Boolean,
-    },
-    canRegister: {
-        type: Boolean,
-    },
-    laravelVersion: {
-        type: String,
-        required: true,
-    },
-    phpVersion: {
-        type: String,
-        required: true,
-    },
+const props = defineProps({
+    selectedPeserta: Object,
 });
 
-// defineProps({ error: Object})
+onBeforeMount(() => {
+    if (props.selectedPeserta !== null) {
+        peserta.value = props.selectedPeserta
+    }
+})
+
 
 const peserta = ref({
     no_id: '',
@@ -41,7 +32,10 @@ const onSubmit = async() => {
     let fd = new FormData();
     fd.append("peserta", JSON.stringify(peserta.value))
     if(foto.value !== null) fd.append("file_foto", foto.value)
+    let url = peserta.value.id ? 'peserta.update': 'peserta.update';
+    let method = peserta.value.id ? 'put' : 'post';
     await router.post(route('peserta.daftar'), fd, {
+       
         onSuccess: (page) => {
             ElNotification({
                 title: 'Informasi',
@@ -74,27 +68,19 @@ const onFotoPicked = (e) => {
 const defaultFoto = (e) => {
     e.target.src = '/img/avatar.png'
 }
+
+const emit = defineEmits(['close'])
 </script>
 
 <template>
-<Head title="Daftar Peserta" />
-<GuestLayout>
-    <!-- <template #toolbar-title>
-        Formulir Pendaftaran
-    </template> -->
-    <div class="w-full flex justify-center p-6">
-        <div class="flex items-center gap-2 mx-auto">
-            <Link :href="route('guest')">
-                <img src="/img/logo.png" alt="Logo" class="w-12">
-            </Link>
-            <div>
-                <h1 class="text-xl font-bold text-blue-800 leading-5">Alsya</h1>
-                <small class="text-slate-500  leading-4">Sertifikat</small>
-            </div>
-        </div>
-    </div>
+<div class="overlay fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center bg-slate-500 bg-opacity-50 backdrop-blur-sm z-50">
     <div class="w-full sm:w-[500px] bg-white p-4 rounded-lg shadow-lg card mx-auto">
-        <h1 class="mb-2 border-b border-dashed pb-3 text-slate-600 font-bold tracking-wide">Formulir Pendaftaran</h1>
+        <div class="toolbar flex items-center justify-between mb-2 border-b border-dashed pb-3">
+            <h1 class=" text-slate-600 font-bold tracking-wide">Formulir Pendaftaran</h1>
+            <button @click="emit('close')">
+                <Icon icon="mdi:close-circle" class="text-2xl text-red-400 hover:text-red-600 active:text-red-500" />
+            </button>
+        </div>
         <img :src="peserta.foto" alt="Avatar" class="w-24 mx-auto mb-2 rounded-full hover:cursor-pointer hover:shadow-lg" @error="defaultFoto" @click="fileFoto.click()" />
         <input type="file" ref="fileFoto" class="hidden" @change="onFotoPicked" accept=".jpg, .png">
         <el-form :model="peserta" label-width="120px" label-position="left">
@@ -125,5 +111,5 @@ const defaultFoto = (e) => {
             </el-form-item>
         </el-form>
     </div>
-</GuestLayout>
+</div>
 </template>

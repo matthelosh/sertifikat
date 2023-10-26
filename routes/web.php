@@ -39,6 +39,7 @@ Route::prefix('peserta')->group(function() {
         ]);
     })->name('front.daftar');
     Route::post('/store', [PesertaController::class, 'store'])->name('peserta.daftar');
+    Route::put('/update', [PesertaController::class, 'update'])->name('peserta.update');
 
 });
 

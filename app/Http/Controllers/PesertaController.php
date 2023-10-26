@@ -29,8 +29,9 @@ class PesertaController extends Controller
             'pesertas' => Peserta::all(),
         ]);
     }
-    public function store(PesertaRequest $request) {
+    public function store(Request $request) {
         // dd(json_decode($request->peserta));
+        $data = json_decode($request->peserta);
         if($request->file('file_foto')) {
             $file = $request->file('file_foto');
             $store = Storage::putFileAs('public/images/peserta', $request->file('file_foto'), $request->no_id.'.'.$file->extension());
@@ -38,15 +39,19 @@ class PesertaController extends Controller
         }
         try {
             $kegiatan = Kegiatan::find(1);
-            Peserta::create([
-                'no_id' => $request['no_id'],
-                'nama' => $request['nama'],
-                'jk' => $request['jk'],
-                'instansi' => $request['instansi'],
-                'alamat' => $request['alamat'] ?? null,
+            Peserta::updateOrCreate(
+                [   
+                    'id' => $data->id ?? null,
+                    'no_id' => $data->no_id,
+                ],
+                [
+                'nama' => $data->nama,
+                'jk' => $data->jk,
+                'instansi' => $data->instansi,
+                'alamat' => $data->alamat ?? null,
                 'kegiatan_id' => $kegiatan->kode,
-                'sebagai' => $request['sebagai'],
-                'foto' => $request->file('file_foto') ? $url : ($request['foto'] ?? null)
+                'sebagai' => $data->sebagai,
+                'foto' => $request->file('file_foto') ? $url : ($data->foto ?? null)
             ]);
 
             return back()->with('status', 'Ok');
@@ -54,4 +59,9 @@ class PesertaController extends Controller
             throw $th;
         }
     }
+
+    public function update(Request $request) {
+        dd($request->peserta);
+    }
+    
 }

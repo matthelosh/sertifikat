@@ -6,6 +6,7 @@ import 'element-plus/es/components/table/style/css'
 import 'element-plus/es/components/pagination/style/css'
 
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+const FormPeserta = defineAsyncComponent(() => import('@/Components/Dashboard/Peserta/FormPeserta.vue'));
 
 const props = defineProps({ pesertas: Array})
 
@@ -30,6 +31,18 @@ const displayPesertas = computed(() => {
     }
 })
 
+const showForm = ref(false);
+const selectedPeserta = ref(null)
+const edit = (item) => {
+    // alert(item.nama)
+    selectedPeserta.value = item
+    showForm.value = true
+
+}
+ const closeForm = () => {
+    showForm.value = false
+    selectedPeserta.value = null
+ }
 // const pageLength = computed(() => {
 //     return props.pesertas.length / perPage.value
 // })
@@ -49,7 +62,15 @@ const displayPesertas = computed(() => {
         </template>
         <el-table :data="displayPesertas.datas" stripe border>
             <el-table-column header-align="center" prop="no_id" label="No. ID"  />
-            <el-table-column header-align="center" prop="nama" label="Nama" />
+            <el-table-column header-align="center" label="Nama">
+                <template #default="scope">
+                    <div>
+                        <el-button flat primary @click="edit(scope.row)">
+                            {{ scope.row.nama }}
+                        </el-button>
+                    </div>
+                </template>
+            </el-table-column>
             <el-table-column header-align="center" prop="jk" label="Jenis Kelamin" />
             <el-table-column header-align="center" prop="instansi" label="Asal Lembaga" />
             <el-table-column header-align="center" prop="alamat" label="Alamat" />
@@ -73,6 +94,7 @@ const displayPesertas = computed(() => {
 
         <!-- <p>{{pesertas.length}} - {{ Math.ceil(pageLength) }}</p> -->
     </AuthenticatedLayout>
+    <FormPeserta :selectedPeserta="selectedPeserta" v-if="showForm" @close="closeForm" />
 </template>
 
 <style>
